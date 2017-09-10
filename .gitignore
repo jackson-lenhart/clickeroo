@@ -1,0 +1,8 @@
+# ignore dependencies
+node_modules
+
+# ignore production build file
+bundle.js
+
+# ignore git folder
+.git
