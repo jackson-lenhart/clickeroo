@@ -7,10 +7,6 @@ export default {
     path: "/",
     filename: "bundle.js"
   },
-  plugins: [
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin()
-  ],
   module: {
     rules: [
       {
