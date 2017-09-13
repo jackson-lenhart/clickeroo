@@ -28,7 +28,7 @@ const mapDispatchToProps = dispatch => {
     },
     finish: () => {
       dispatch({
-        type: "FINISH"
+        type: "CREATE_ENTRY"
       });
     }
   };

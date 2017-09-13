@@ -1,15 +1,11 @@
-import { h, render } from "preact";
-import { createStore } from "redux";
-import { Provider } from "preact-redux";
+import shortid from "shortid";
+import axios from "axios";
 
-import App from "./app";
-
-import "./style.css";
-
-const reducer = (state = {
+export default (state = {
   currentClicks: 0,
   prevClicks: [],
-  totalClicks: 0
+  totalClicks: 0,
+  success: false
 }, action) => {
   switch (action.type) {
     case "CLICK":
@@ -20,8 +16,8 @@ const reducer = (state = {
         totalClicks: state.totalClicks
       };
       break;
-    case "FINISH":
-      const id = state.prevClicks.length;
+    case "CREATE_ENTRY":
+      const id = shortid.generate();
       return {
         ...state,
         currentClicks: 0,
@@ -56,13 +52,4 @@ const reducer = (state = {
     default:
       return state;
   }
-}
-
-const store = createStore(reducer);
-
-render(
-  <Provider store={store}>
-    <App/>
-  </Provider>,
-  document.body
-);
+};

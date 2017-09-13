@@ -1,7 +1,19 @@
 import { h } from "preact";
 import { connect } from "preact-redux";
+import axios from "axios";
 
 const ClickTable = props => {
+  if (props.prevClicks.length === 0) return '';
+
+  const saveDocument = () => {
+    axios.post("/api/clickdocs", { totalClicks: props.totalClicks })
+      .then(response => {
+        response.json();
+      }).catch(err => {
+        alert(err);
+      });
+  };
+
   const htmlContent = props.prevClicks.map((el, index) => {
     return (
       <tr key={index}>
@@ -11,8 +23,6 @@ const ClickTable = props => {
       </tr>
     )
   });
-
-  if (props.prevClicks.length === 0) return '';
 
   return (
     <div>
@@ -26,6 +36,7 @@ const ClickTable = props => {
       </table>
       <p>total clicks: {props.totalClicks}</p>
       <button onClick={props.deleteAll}>Delete All</button>
+      <button onClick={saveDocument}>Save Document</button>
     </div>
   );
 };
@@ -51,6 +62,11 @@ const mapDispatchToProps = dispatch => {
     deleteAll: () => {
       dispatch({
         type: "DELETE_ALL"
+      });
+    },
+    saveDocumentRequest: () => {
+      dispatch({
+        type: "SAVE_DOCUMENT"
       });
     }
   };

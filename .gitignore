@@ -6,3 +6,5 @@ bundle.js
 
 # ignore git folder
 .git
+
+.DS_Store

@@ -1,24 +1,22 @@
-var HtmlWebpackPlugin = require("html-webpack-plugin");
+import webpack from "webpack";
 
-module.exports = {
-  entry: "./index.js",
+export default {
+  devtool: "eval-source-map",
+  entry: "./client/index.js",
   output: {
-    path: __dirname + "/dist",
+    path: "/",
     filename: "bundle.js"
   },
-  plugins: [new HtmlWebpackPlugin()],
+  plugins: [
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin()
+  ],
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["env", "preact"],
-            plugins: ["transform-object-rest-spread"]
-          }
-        }
+        exclude: /(node_modules)/,
+        loader: "babel-loader"
       },
       {
         test: /\.css$/,
