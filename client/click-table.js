@@ -6,12 +6,20 @@ const ClickTable = props => {
   if (props.prevClicks.length === 0) return '';
 
   const saveDocument = () => {
-    axios.post("/api/clickdocs", { totalClicks: props.totalClicks })
-      .then(response => {
-        response.json();
-      }).catch(err => {
-        alert(err);
-      });
+    const config = {
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      body: JSON.stringify({ totalClicks: props.totalClicks })
+    };
+
+    fetch("/api/clickdocs", config).then(response => {
+      return response.json();
+    }).catch(err => {
+      console.log(err);
+    });
   };
 
   const htmlContent = props.prevClicks.map((el, index) => {
@@ -62,11 +70,6 @@ const mapDispatchToProps = dispatch => {
     deleteAll: () => {
       dispatch({
         type: "DELETE_ALL"
-      });
-    },
-    saveDocumentRequest: () => {
-      dispatch({
-        type: "SAVE_DOCUMENT"
       });
     }
   };

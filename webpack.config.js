@@ -1,10 +1,11 @@
 import webpack from "webpack";
+import path from "path";
 
 export default {
   devtool: "eval-source-map",
   entry: "./client/index.js",
   output: {
-    path: "/",
+    path: path.resolve(__dirname, "build"),
     filename: "bundle.js"
   },
   module: {
