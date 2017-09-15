@@ -1,7 +1,7 @@
 import { h } from "preact";
 import { connect } from "preact-redux";
 
-const ClickButton = props => {
+const ClickButtons = props => {
   return (
     <div id="clickButton">
       <button onClick={props.add}>More</button>
@@ -41,4 +41,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClickButton);
+export default connect(mapStateToProps, mapDispatchToProps)(ClickButtons);

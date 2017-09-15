@@ -7,7 +7,7 @@ import DocTable from "./doc-table";
 export default props => {
   return (
     <div id="container">
-      <ClickButton/>
+      <ClickButtons/>
       <ClickTable/>
       <DocTable/>
     </div>
