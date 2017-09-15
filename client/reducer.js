@@ -1,5 +1,4 @@
 import shortid from "shortid";
-import axios from "axios";
 
 export default (state = {
   currentClicks: 0,
@@ -8,12 +7,16 @@ export default (state = {
   success: false
 }, action) => {
   switch (action.type) {
-    case "CLICK":
+    case "ADD":
       return {
         ...state,
-        currentClicks: state.currentClicks + action.payload,
-        prevClicks: state.prevClicks,
-        totalClicks: state.totalClicks
+        currentClicks: state.currentClicks + action.payload
+      };
+      break;
+    case "SUBTRACT":
+      return {
+        ...state,
+        currentClicks: state.currentClicks - action.payload
       };
       break;
     case "CREATE_ENTRY":

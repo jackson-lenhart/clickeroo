@@ -1,4 +1,3 @@
-
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("clickdocs", function(table) {
     table.increments();

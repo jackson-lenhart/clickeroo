@@ -1,53 +1,77 @@
-import { h } from "preact";
+import { h, Component } from "preact";
 import { connect } from "preact-redux";
-import axios from "axios";
 
-const ClickTable = props => {
-  if (props.prevClicks.length === 0) return '';
+class ClickTable extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      success: false
+    };
 
-  const saveDocument = () => {
+    this.saveDoc = this.saveDoc.bind(this);
+  }
+
+  saveDoc() {
     const config = {
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json"
       },
       method: "POST",
-      body: JSON.stringify({ totalClicks: props.totalClicks })
+      body: JSON.stringify({ totalClicks: this.props.totalClicks })
     };
 
     fetch("/api/clickdocs", config).then(response => {
+      this.setState({ success: true });
       return response.json();
     }).catch(err => {
       console.log(err);
     });
-  };
 
-  const htmlContent = props.prevClicks.map((el, index) => {
-    return (
-      <tr key={index}>
-        <td>{el.clickCount}</td>
-        <td>{el.clickID}</td>
-        <td><a href="#" onClick={() => props.delete(el.clickID, el.clickCount)}>x</a></td>
-      </tr>
-    )
-  });
+    setTimeout(() => {
+      this.setState({ success: false });
+    }, 5000);
+  }
 
-  return (
-    <div>
-      <table>
-        <tr>
-          <th>Click Count</th>
-          <th>ID</th>
-          <th>Delete</th>
+  render() {
+    if (this.props.prevClicks.length === 0) return '';
+
+    const htmlContent = this.props.prevClicks.map((el, index) => {
+      return (
+        <tr key={index}>
+          <td>{el.clickCount}</td>
+          <td>{el.clickID}</td>
+          <td><a href="#" onClick={() => this.props.delete(el.clickID, el.clickCount)}>x</a></td>
         </tr>
-        {htmlContent}
-      </table>
-      <p>total clicks: {props.totalClicks}</p>
-      <button onClick={props.deleteAll}>Delete All</button>
-      <button onClick={saveDocument}>Save Document</button>
-    </div>
-  );
-};
+      )
+    });
+
+    let successMsg = "";
+    if (this.state.success) {
+      successMsg = (
+        <small style={{color: "green"}}>Document has been saved.</small>
+      );
+    }
+
+    return (
+      <div>
+        <table>
+          <tr>
+            <th>Click Count</th>
+            <th>ID</th>
+            <th>Delete</th>
+          </tr>
+          {htmlContent}
+        </table>
+        <p>total clicks: {this.props.totalClicks}</p>
+        <button onClick={this.props.deleteAll}>Delete All</button>
+        <button onClick={this.saveDoc}>Save Document</button>
+        <br/>
+        {successMsg}
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = state => {
   return {
@@ -73,6 +97,6 @@ const mapDispatchToProps = dispatch => {
       });
     }
   };
-};
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClickTable);

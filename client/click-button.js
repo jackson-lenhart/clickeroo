@@ -4,7 +4,8 @@ import { connect } from "preact-redux";
 const ClickButton = props => {
   return (
     <div id="clickButton">
-      <button onClick={props.click}>More</button>
+      <button onClick={props.add}>More</button>
+      <button onClick={props.subtract}>Less</button>
       <p>{props.currentClicks}</p>
       <button onClick={props.finish}>Done</button>
     </div>
@@ -20,9 +21,15 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    click: () => {
+    add: () => {
       dispatch({
-        type: "CLICK",
+        type: "ADD",
+        payload: 1
+      });
+    },
+    subtract: () => {
+      dispatch({
+        type: "SUBTRACT",
         payload: 1
       });
     },
