@@ -1,6 +1,6 @@
 import { h, Component } from "preact";
 
-import ClickButton from "./click-button";
+import ClickButtons from "./click-buttons";
 import ClickTable from "./click-table";
 import DocTable from "./doc-table";
 
